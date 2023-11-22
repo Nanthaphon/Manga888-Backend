@@ -15,4 +15,6 @@ router.post(
 
 router.get("/getAll", productController.getAll);
 
+router.get("/viewProductById/:productId", productController.viewProductById);
+
 module.exports = router;
