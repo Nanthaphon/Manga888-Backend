@@ -13,7 +13,11 @@ router.post(
   productController.createProduct
 );
 
+router.delete("/deleteProduct/:ProductId", productController.deleteProductById);
+
 router.get("/getAll", productController.getAll);
+
+router.get("/getAllAdmin", productController.getAllAdmin);
 
 router.get("/viewProductById/:productId", productController.viewProductById);
 

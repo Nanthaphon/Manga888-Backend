@@ -46,7 +46,6 @@ exports.getAll = async (req, res, next) => {
 exports.viewProductById = async (req, res, next) => {
   try {
     const target = req.params.productId;
-    // console.log(target);
     const findProduct = await prisma.product.findFirst({
       where: {
         id: +target,
@@ -54,6 +53,31 @@ exports.viewProductById = async (req, res, next) => {
     });
     console.log(findProduct);
 
+    res.status(201).json({ findProduct });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteProductById = async (req, res, next) => {
+  try {
+    const target = req.params.ProductId;
+    console.log(target);
+    const deleteProduct = await prisma.product.delete({
+      where: {
+        id: +target,
+      },
+    });
+    console.log(deleteProduct);
+    res.status(201).json({ msg: "ok" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAllAdmin = async (req, res, next) => {
+  try {
+    const findProduct = await prisma.product.findMany({});
     res.status(201).json({ findProduct });
   } catch (error) {
     next(error);
