@@ -62,14 +62,14 @@ exports.viewProductById = async (req, res, next) => {
 exports.deleteProductById = async (req, res, next) => {
   try {
     const target = req.params.ProductId;
-    console.log(target);
+    console.log(target, "pppppppppppppppps");
     const deleteProduct = await prisma.product.delete({
       where: {
         id: +target,
       },
     });
-    console.log(deleteProduct);
-    res.status(201).json({ msg: "ok" });
+    console.log(deleteProduct, "vvvvvvvvcvvvvvvvvvvv");
+    res.status(201).json({ deleteProduct });
   } catch (error) {
     next(error);
   }
@@ -79,6 +79,39 @@ exports.getAllAdmin = async (req, res, next) => {
   try {
     const findProduct = await prisma.product.findMany({});
     res.status(201).json({ findProduct });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.EditProduct = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const { price, name, description } = req.body;
+    // console.log("productId", productId);
+    let image;
+    console.log("image", req.file);
+    console.log("nameproduct", name);
+
+    if (req.file) {
+      image = await upload(req.file.path);
+    }
+    // if (!req.file) {
+    //   return next(createError("image is required", 400));
+    // }
+    const updateProduct = await prisma.product.updateMany({
+      data: {
+        price: +price,
+        name: name,
+        description: description,
+        image: image,
+      },
+      where: {
+        id: +productId,
+      },
+    });
+
+    res.status(201).json({ updateProduct });
   } catch (error) {
     next(error);
   }

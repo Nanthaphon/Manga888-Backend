@@ -23,7 +23,11 @@ model User {
   password  String
   address   String?
   isAdmin   Status  @default(USER)
-  phone_No  Int?
+  mobile    Int?
+  city      String?
+  zipCode   Int?
+  country   String?
+  province  String?
   Orders    Order[]
   Cart      Cart[]
 }
@@ -34,6 +38,7 @@ model Order {
   delivery_date DateTime     @default(now())
   total_Price   Int
   userId        Int
+  slipImageUrl  String
   user          User         @relation(fields: [userId], references: [id])
   Order_item    Order_item[]
 }

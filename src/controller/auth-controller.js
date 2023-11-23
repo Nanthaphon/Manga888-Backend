@@ -58,3 +58,44 @@ exports.login = async (req, res, next) => {
 exports.getMe = (req, res) => {
   res.status(200).json({ user: req.user });
 };
+
+exports.cart = async (req, res, next) => {
+  try {
+    const user = req.user.id;
+    console.log(user);
+    const data = req.body;
+    console.log(data);
+    const cart = await prisma.cart.create({
+      data: {
+        userId: user,
+        amount: +data.amount,
+        productId: +data.productId,
+      },
+    });
+    console.log(cart);
+
+    res.status(200).json({ msg: "ok" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getCart = async (req, res, next) => {
+  try {
+    const findProduct = req.user.id;
+    const getCartProduct = await prisma.cart.findFirst({
+      where: {
+        userId: +findProduct,
+      },
+      include: {
+        product: true,
+      },
+    });
+
+    // console.log(getCartProduct);
+
+    res.status(201).json({ getCartProduct });
+  } catch (error) {
+    next(error);
+  }
+};

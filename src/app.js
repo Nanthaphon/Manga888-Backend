@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const authRouter = require("./routes/auth-route");
+const orderRouter = require("./routes/order-route");
 const productRoute = require("./routes/product-route");
 const errorMiddleware = require("./middleware/error");
 const notFoundMiddleware = require("./middleware/not-found");
@@ -14,6 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/order", orderRouter);
 app.use("/product", productRoute);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

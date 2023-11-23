@@ -21,4 +21,10 @@ router.get("/getAllAdmin", productController.getAllAdmin);
 
 router.get("/viewProductById/:productId", productController.viewProductById);
 
+router.patch(
+  "/editproduct/:productId",
+  uploadMiddleware.single("image"),
+  productController.EditProduct
+);
+
 module.exports = router;
