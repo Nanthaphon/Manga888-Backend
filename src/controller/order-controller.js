@@ -34,3 +34,29 @@ module.exports.checkout = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOrderByUser = async (req, res, next) => {
+  try {
+    const result = await prisma.order.findMany({
+      where: {
+        userId: req.user.id,
+      },
+      include: {
+        Order_item: {
+          include: { product: true },
+        },
+      },
+    });
+    console.log(result);
+
+    const product = result.map((el) => ({
+      name: el.Order_item[0].product.name,
+      image: el.Order_item[0].product.image,
+      price: el.Order_item[0].product.price,
+      id: el.Order_item[0].product.id,
+    }));
+    res.status(200).json(product);
+  } catch (error) {
+    next(error);
+  }
+};

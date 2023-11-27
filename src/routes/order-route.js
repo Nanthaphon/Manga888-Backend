@@ -10,5 +10,9 @@ router.post(
   upload.single("slipImageUrl"),
   orderController.checkout
 );
-
+router.get(
+  "/getOrderByUser",
+  authenticateMiddleware,
+  orderController.getOrderByUser
+);
 module.exports = router;
